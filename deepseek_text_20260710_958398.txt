@@ -1,0 +1,26 @@
+Create industry and checklist service modules for an audit planning application:
+
+1. services/industryService.js:
+   - getIndustryTypes(): Returns all industries with their applicable acts
+   - getApplicableAct(industryType): Returns distinct acts for an industry type
+   - getIndustryById(industryId): Returns single industry with act details
+   - All functions return {success, data} format
+   - SQL queries with proper JOINs
+
+2. services/checklistService.js:
+   - getChecklistByAct(actId): Returns ordered checklist items by category and sort order
+   - getChecklistByCategory(actId, category): Returns filtered items
+   - getChecklistWithRiskAssessment(actId, riskAreas): 
+     * Parses JSON risk areas array
+     * Returns items matching selected risk categories
+     * Orders by risk_weight (high to low)
+     * Uses parameterized queries for IN clause
+
+3. Dynamic query building for risk area filtering
+4. Proper error handling for JSON parsing
+5. Database queries optimized with indexes
+
+Dependencies: better-sqlite3 (via dbInit)
+Output: services/industryService.js, services/checklistService.js
+Integration: Called via IPC handlers, used by dashboard workflow
+Error handling: Validate input parameters, handle empty results gracefully

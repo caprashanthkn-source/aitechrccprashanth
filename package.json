@@ -1,0 +1,19 @@
+{
+  "name": "audit-planning-assistant",
+  "version": "1.0.0",
+  "description": "Desktop Audit Planning Assistant",
+  "main": "main.js",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "generate-doc": "node scripts/generate-doc.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "docx": "^8.5.0",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "devDependencies": {
+    "electron": "^28.1.0"
+  }
+}

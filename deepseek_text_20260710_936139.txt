@@ -1,0 +1,21 @@
+Create a complete Electron main process file (main.js) for an Audit Planning Assistant desktop application. The file should include:
+
+1. Window creation with specific dimensions (1400x900, minWidth: 1200)
+2. Preload script integration with context isolation enabled
+3. All IPC handlers for:
+   - Authentication (login, logout, register)
+   - Industry management (getTypes, getApplicableAct)
+   - Checklist operations (getByAct, getByCategory)
+   - Client management (create, search, getAll)
+   - Team management (getAvailable, getWorkload, optimizeAllocation)
+   - Audit operations (createPlan, generateProgram, getMilestones)
+   - Report exports (Word and PDF with save dialogs)
+4. Database initialization on app ready
+5. Error handling for all IPC calls with proper error propagation
+6. Development mode DevTools integration
+7. App lifecycle management (ready, window-all-closed, activate)
+
+Dependencies: electron, path, better-sqlite3
+Output: main.js file in root directory
+Integration: Works with preload.js, database/dbInit.js, and all service files
+Error handling: Wrap all IPC handlers in try-catch, return {success, message} format

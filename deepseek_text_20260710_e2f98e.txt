@@ -1,0 +1,38 @@
+Create audit service (services/auditService.js) that generates audit plans and programs:
+
+1. createAuditPlan(auditData):
+   - Accepts: clientId, auditTitle, industryId, applicableActId, financialYear, annualTurnover, riskAreas[], startDate, endDate, createdBy
+   - calculateBaseHours(turnover):
+     * Up to 1Cr: 60 hours
+     * 1-5Cr: 80 hours
+     * 5-25Cr: 120 hours
+     * 25-100Cr: 160 hours
+     * Above 100Cr: 200 hours
+   - calculateRiskMultiplier(riskAreas):
+     * Financial: 1.2, Operational: 1.1, Compliance: 1.15, Strategic: 1.05
+     * Multiplicative combination capped at 2.0x
+   - Inserts audit record and generates milestones
+
+2. generateMilestones(auditId, startDate, endDate):
+   - Creates 5 phases: Planning(15%), Preliminary(20%), FieldWork1(25%), FieldWork2(20%), Review(20%)
+   - Calculates dates based on total duration
+   - Uses transaction for batch insert
+
+3. generateAuditProgram(auditId):
+   - Fetches checklist items based on applicable act and risk areas
+   - Generates procedures with:
+     * determineSampling(category, riskWeight):
+       - Weight >= 2.0: 100% verification
+       - Weight >= 1.5: Statistical sampling (95% confidence)
+       - Else: Random sampling (25 samples)
+     * getRiskLevel(weight): Critical(>=2.0), High(>=1.5), Medium(>=1.0), Low(<1.0)
+     * generateProcedureDescription(item, audit): Contextual descriptions
+   - Assigns to team members using round-robin
+   - Uses transaction for batch insert
+
+4. getAuditMilestones(auditId): Returns milestones with responsible team member names
+
+Dependencies: better-sqlite3
+Output: services/auditService.js
+Integration: Core service called from dashboard workflow
+Error handling: Validate all inputs, handle missing foreign keys

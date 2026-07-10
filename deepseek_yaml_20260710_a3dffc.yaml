@@ -1,0 +1,35 @@
+# electron-builder.yml
+appId: com.auditplanning.assistant
+productName: Audit Planning Assistant
+copyright: Copyright © 2024
+
+directories:
+  output: dist
+  buildResources: assets
+
+files:
+  - main.js
+  - preload.js
+  - database/**/*
+  - services/**/*
+  - renderer/**/*
+  - assets/**/*
+  - node_modules/**/*
+
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+        - ia32
+  icon: assets/icon.ico
+
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  installerIcon: assets/icon.ico
+  uninstallerIcon: assets/icon.ico
+  installerHeaderIcon: assets/icon.ico
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: Audit Planning Assistant

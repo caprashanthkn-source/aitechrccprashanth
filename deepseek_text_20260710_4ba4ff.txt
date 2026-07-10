@@ -1,0 +1,27 @@
+Create a complete authentication service (services/authService.js) for an Electron desktop application using SQLite database. Requirements:
+
+1. Login function that:
+   - Validates username against users table
+   - Uses bcryptjs for password comparison
+   - Updates last_login timestamp
+   - Generates JWT token (8h expiry)
+   - Returns user object with userId, username, fullName, email, role
+   - Handles inactive accounts
+   - Returns {success, token, user} or {success: false, message}
+
+2. Register function that:
+   - Checks for duplicate usernames
+   - Hashes password with bcrypt (10 salt rounds)
+   - Inserts new user record
+   - Returns {success, userId}
+
+3. Token verification function using jsonwebtoken
+
+4. Database connection via getDatabase() from dbInit
+5. Proper error handling with specific error messages
+6. JWT_SECRET constant stored securely
+
+Dependencies: bcryptjs, jsonwebtoken, better-sqlite3
+Output: services/authService.js
+Integration: Used by main.js IPC handlers, called from renderer via preload
+Error handling: Return structured error objects, never throw raw errors

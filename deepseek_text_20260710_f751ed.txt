@@ -1,0 +1,34 @@
+Create a team allocation optimization service (services/teamService.js) with:
+
+1. getAvailableMembers():
+   - Returns team members with is_available = 1
+   - Calculates available_hours (max_capacity - current_workload)
+   - Orders by years_experience descending
+
+2. getMemberWorkload(memberId):
+   - Returns current allocations for the member
+   - Includes audit details (title, dates)
+   - Filters for Planned and Active status only
+
+3. optimizeTeamAllocation(auditId, requiredSkills):
+   - Fetches audit details for dates and total hours
+   - Gets members matching required skills (using LIKE on expertise_areas JSON)
+   - Implements allocation algorithm:
+     * Lead auditor: Most experienced, 30% of total hours (max 50% availability)
+     * Team members: Distributed remaining hours (max 40% each)
+   - Uses transactions to:
+     * Delete existing allocations
+     * Insert new allocations with roles
+     * Update member workload counters
+   - Returns structured allocation data with member details
+
+4. Constraint handling:
+   - Respects max_capacity_hours
+   - Considers current_workload_hours
+   - Skills matching using JSON expertise parsing
+   - Availability filtering
+
+Dependencies: better-sqlite3 (via dbInit)
+Output: services/teamService.js
+Integration: Called after audit plan creation, feeds into report generation
+Error handling: Handle no available members, insufficient capacity, transaction rollback

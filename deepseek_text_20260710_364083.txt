@@ -1,0 +1,37 @@
+Create a database initialization module (database/dbInit.js) for SQLite using better-sqlite3. Include:
+
+1. Complete schema creation with tables:
+   - users (with role check constraint: admin, manager, auditor)
+   - client_types
+   - regulatory_acts
+   - industries (with FOREIGN KEY to acts)
+   - checklist_items (with risk_weight and category constraints)
+   - clients (with type and industry foreign keys)
+   - team_members (with expertise as JSON text, workload tracking)
+   - audits (with status check constraint)
+   - team_allocations
+   - audit_milestones
+   - audit_procedures (with risk_assessment check constraint)
+
+2. Performance indexes on:
+   - username, client_type_id, client_industry_id
+   - checklist_act_id, audits_client_id
+   - allocations_audit_id, allocations_member_id
+   - milestones_audit_id, procedures_audit_id
+
+3. Seed data function with:
+   - 5 client types
+   - 5 regulatory acts (Companies Act 2013, Income Tax Act, GST Act, Factories Act, Shops Act)
+   - 9 industries across 3 types (Manufacturer, Trader, Service Provider)
+   - 20+ checklist items with varying risk weights (1.0 to 2.0)
+   - 6 team members with different expertise levels
+   - 1 admin user (username: admin, password: admin123, bcrypt hashed)
+
+4. WAL mode and foreign keys enabled
+5. getDatabase() singleton function
+6. Auto-create data directory if missing
+
+Dependencies: better-sqlite3, bcryptjs, path, fs
+Output: database/dbInit.js
+Integration: Called from main.js on app startup
+Error handling: Transaction-based seeding to prevent partial data

@@ -1,0 +1,35 @@
+Create report generation service (services/reportService.js) using docx library:
+
+1. exportToWord(auditId, filePath):
+   - Fetches complete audit data with JOINs (audit, client, industry, act)
+   - Creates professional Word document with sections:
+     * Title: "AUDIT PLAN & PROGRAM" centered
+     * Section 1: CLIENT INFORMATION table
+     * Section 2: AUDIT DETAILS table
+     * Section 3: TEAM ALLOCATION table with columns: Name, Designation, Role, Hours, Expertise
+     * Section 4: AUDIT MILESTONES table
+     * Section 5: AUDIT PROGRAM table with columns: Category, Reference, Procedure, Sampling, Risk, Hours, Assignee
+   - Tables with proper borders, widths, and formatting
+   - Currency formatting for Indian Rupees (₹)
+   - Text truncation for long procedure descriptions (100 chars)
+   - Save to specified file path using fs.writeFileSync
+
+2. Helper functions:
+   - createInfoTable(data): 2-column label-value table
+   - createTeamTable(allocations): Full team allocation display
+   - createMilestoneTable(milestones): 5-column milestone view
+   - createProcedureTable(procedures): 7-column detailed program
+   - formatCurrency(amount): Indian number formatting
+
+3. exportToPDF(auditId, filePath): Placeholder for future implementation
+
+4. Document styling:
+   - Professional fonts and spacing
+   - Consistent table widths (9000 dxa total)
+   - Section headings with proper spacing
+   - Text sizes: 18pt headers, 16pt data
+
+Dependencies: docx, fs
+Output: services/reportService.js
+Integration: Called via IPC with save dialog, generates downloadable files
+Error handling: Check file path validity, handle missing data gracefully
